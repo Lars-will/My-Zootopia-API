@@ -73,7 +73,8 @@ def generate_animals_string(animals_data):
 
 
 def main():
-    animals_data = fetch_animals("Fox")
+    str_search = input("Hello. What type of animal are you looking for? ")
+    animals_data = fetch_animals(str_search)
     str_html_file = read_html_file("animals_template.html")
     str_animals = generate_animals_string(animals_data)
     str_new_html_file = str_html_file.replace("__REPLACE_ANIMALS_INFO__", str_animals)
