@@ -1,8 +1,4 @@
-import json
-import requests
-
-STR_API_KEY = "3gu5g01FCS8+wfLWZCnvWw==qfY8O3OHyyn8Vi4T"
-STR_API_URL = "https://api.api-ninjas.com/v1/animals"
+import data_fetcher
 
 
 def write_html_file(str_file_name, str_data):
@@ -15,14 +11,6 @@ def read_html_file(str_file_name):
     """Function to read html file"""
     with open(str_file_name, "r") as fileobj:
         return  fileobj.read()
-
-
-def fetch_animals(str_search):
-    """gets the animal data from the API and returns as list"""
-    dict_params = {'name': str_search}
-    dict_headers = {'X-Api-Key': STR_API_KEY}
-    response = requests.get(STR_API_URL, params=dict_params, headers=dict_headers)
-    return response.json()
 
 
 def print_animals(animals_data):
@@ -74,7 +62,7 @@ def generate_animals_string(animals_data):
 
 def main():
     str_search = input("Hello. What type of animal are you looking for? ")
-    animals_data = fetch_animals(str_search)
+    animals_data = data_fetcher.fetch_animals(str_search)
     str_html_file = read_html_file("animals_template.html")
     if len(animals_data) > 0:
         str_animals = generate_animals_string(animals_data)
