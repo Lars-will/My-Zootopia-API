@@ -1,4 +1,9 @@
 import json
+import requests
+
+STR_API_KEY = "3gu5g01FCS8+wfLWZCnvWw==qfY8O3OHyyn8Vi4T"
+STR_API_URL = "https://api.api-ninjas.com/v1/animals"
+
 
 def write_html_file(str_file_name, str_data):
     """Function to write new html file."""
@@ -12,10 +17,12 @@ def read_html_file(str_file_name):
         return  fileobj.read()
 
 
-def load_data(file_path):
-  """ Loads a JSON file """
-  with open(file_path, "r") as handle:
-    return json.load(handle)
+def fetch_animals(str_search):
+    """gets the animal data from the API and returns as list"""
+    dict_params = {'name': str_search}
+    dict_headers = {'X-Api-Key': STR_API_KEY}
+    response = requests.get(STR_API_URL, params=dict_params, headers=dict_headers)
+    return response.json()
 
 
 def print_animals(animals_data):
@@ -66,8 +73,7 @@ def generate_animals_string(animals_data):
 
 
 def main():
-    animals_data = load_data('animals_data.json')
-    #print_animals(animals_data)
+    animals_data = fetch_animals("Fox")
     str_html_file = read_html_file("animals_template.html")
     str_animals = generate_animals_string(animals_data)
     str_new_html_file = str_html_file.replace("__REPLACE_ANIMALS_INFO__", str_animals)
